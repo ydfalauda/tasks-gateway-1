@@ -1,9 +1,5 @@
-FROM golang:1.7
+FROM scratch
 
-ADD . /go/src/app
+ADD gateway /
 
-WORKDIR /go/src/app
-
-RUN go install
-
-CMD ["/go/bin/app"]
+CMD ["/gateway"]

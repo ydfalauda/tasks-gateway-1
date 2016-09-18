@@ -1,0 +1,10 @@
+version: "0.1.0"
+pre_ci_boot:
+    image: golang
+    tag: "1.7"
+ci:
+    - mkdir -p $GOPATH/src/gateway
+    - cp -r ./* $GOPATH/src/gateway
+    - cd $GOPATH/src/gateway
+    - go install
+    - cp $GOPATH/bin/gateway $ALAUDACI_DIST_DIR
