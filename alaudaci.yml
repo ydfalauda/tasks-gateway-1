@@ -3,8 +3,10 @@ pre_ci_boot:
     image: golang
     tag: "1.7"
 ci:
-    - mkdir -p $GOPATH/src/gateway
-    - cp -r ./* $GOPATH/src/gateway
-    - cd $GOPATH/src/gateway
+    - env
+    - mkdir -p /go/src/gateway
+    - cp -r ./* /go/src/gateway
+    - cd /go/src/gateway
     - go install
-    - cp $GOPATH/bin/gateway $ALAUDACI_DIST_DIR
+    - cp /go/bin/gateway $ALAUDACI_DEST_DIR/
+    - cp Dockerfile $ALAUDACI_DEST_DIR/

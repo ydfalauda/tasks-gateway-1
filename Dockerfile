@@ -1,5 +1,11 @@
-FROM scratch
+FROM debian:jessie
 
-ADD gateway /
+ADD gateway /gateway
+
+WORKDIR /
+
+RUN chmod +x /gateway
+
+RUN ls -la / 
 
 CMD ["/gateway"]
