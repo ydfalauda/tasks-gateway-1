@@ -1,0 +1,38 @@
+<md-toolbar ng-controller="LogoutCtrl as lc">
+  <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
+    <h3>
+      <span>Tasks!</span>
+    </h3>
+    <md-button class="md-icon-button" aria-label="Exit" ng-click="lc.logoutUser()">
+      <md-icon md-svg-src="media/exit.svg"></md-icon>
+    </md-button>
+  </div>
+</md-toolbar>
+<md-content flex layout-padding layout="row" layout-align="space-between center" >
+  <div flex="20" flex-sm="0">
+  </div>
+  <div flex="60" ng-if="tc.items.length === 0 && tc.loaded" layout="column" layout-align="space-between center">
+    <h3><!-- space :P --></h3>
+    <md-icon class="s48" md-svg-src="media/addnote.svg"></md-icon>
+    <h3>Add a new task to get started</h3>
+    <md-button class="md-raised md-hue-1 md-accent" aria-label="Add task" ng-click='tc.addNew($event)'>
+        Add task
+    </md-button>
+  </div>
+  <div flex="60" ng-if="!tc.loaded">
+    <div layout="row" layout-sm="column" layout-align="center center">
+      <md-progress-circular md-mode="indeterminate" md-diameter="150" class="md-hue-1 md-accent"></md-progress-circular>
+    </div>
+  </div>
+  <md-list flex="60" ng-if="tc.loaded && tc.items.length" flex-sm="100" class="md-background md-hue-1"  layout-align="center" >
+    <md-list-item flex="66" ng-repeat="task in tc.items" aria-label="Task" ng-click='tc.edit(task, $event)'  class="md-1-line">
+      <md-checkbox ng-model='task.done' ng-click="tc.checkTask(task,$event)"  ></md-checkbox>
+      <p ng-class="{'overline': task.done}">{{ task.name }}</p>
+    </md-list-item>
+  </md-list>
+  <div flex="20" flex-sm="0">
+  </div>
+</md-content>
+<md-button class="md-fab md-accent md-fab-bottom-right" aria-label="Add task" ng-click='tc.addNew($event)'>
+    <md-icon md-svg-src="media/add.svg"></md-icon>
+</md-button>
