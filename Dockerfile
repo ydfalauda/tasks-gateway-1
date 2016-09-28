@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM index.alauda.cn/library/debian:jessie
 
 ADD gateway /gateway
 
