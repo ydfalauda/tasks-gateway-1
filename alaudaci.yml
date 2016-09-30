@@ -4,9 +4,9 @@ pre_ci_boot:
     tag: "1.7"
 ci:
     - env
-    - mkdir -p /go/src/gateway
-    - cp -r ./* /go/src/gateway
-    - cd /go/src/gateway
+    - mkdir -p $GOPATH/src/gateway
+    - cp -r ./* $GOPATH/src/gateway
+    - cd $GOPATH/src/gateway
     - go install
-    - cp /go/bin/gateway $ALAUDACI_DEST_DIR/
+    - cp $GOPATH/bin/gateway $ALAUDACI_DEST_DIR/
     - cp Dockerfile $ALAUDACI_DEST_DIR/
