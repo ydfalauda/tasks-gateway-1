@@ -10,3 +10,4 @@ ci:
     - go install
     - cp $GOPATH/bin/gateway $ALAUDACI_DEST_DIR/
     - cp Dockerfile $ALAUDACI_DEST_DIR/
+    - cp -r client $ALAUDACI_DEST_DIR/
