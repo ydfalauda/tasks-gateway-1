@@ -1,2 +1,2 @@
 # tasks-gateway
-Gateway API in go
+Gateway API in go.
