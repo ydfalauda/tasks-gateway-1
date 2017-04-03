@@ -1,0 +1,49 @@
+<md-toolbar>
+  <div class="md-toolbar-tools">
+    <h3>
+      <span>Tasks!</span>
+    </h3>
+  </div>
+</md-toolbar>
+<md-content layout="vertical" ng-controller="LoginCtrl as lc">
+  <div flex="20" flex-sm="0">
+  </div>
+  <div flex="60" flex-sm="100" layout="horizontal">
+    <div flex-sm="5" flex="20">
+    </div>
+    <md-card class="whitecard" flex-sm="90" flex="60" layout-align="center" md-hue-1>
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">Login</span>
+        </md-card-title-text>
+      </md-card-title>
+      <md-card-content>
+        <form name="loginForm">
+          <md-input-container class="md-block">
+            <label>Username</label>
+            <input required name="username" ng-model="lc.credentials.username">
+            <div ng-messages="loginForm.username.$error">
+              <div ng-message="required">Please input your username for login.</div>
+            </div>
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>Password</label>
+            <input required type="password" name="password" ng-model="lc.credentials.password">
+            <div ng-messages="loginForm.password.$error">
+              <div ng-message="required">Please input your password.</div>
+            </div>
+          </md-input-container>
+        </form>
+      </md-card-content>
+      <md-card-actions layout="row" layout-align="end center">
+        <md-button class="md-accent md-raised md-hue-1" ng-click="lc.submitLogin()">Login</md-button>
+        <md-button ng-href="#/signup"  class="md-primary">Signup</md-button>
+      </md-card-actions>
+    </md-card>
+    <div flex-sm="5" flex="20">
+    </div>
+  </div>
+  <div flex="20" flex-sm="0">
+  </div>
+</md-content>

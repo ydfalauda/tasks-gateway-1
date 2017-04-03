@@ -1,0 +1,11 @@
+{
+  "local": {
+    "apiUrl":"http://localhost:3000"
+  },
+  "compose": {
+    "apiUrl": "http://localhost:3000"
+  },
+  "production": {
+    "apiUrl":""
+  }
+}

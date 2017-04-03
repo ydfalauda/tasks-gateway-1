@@ -1,0 +1,23 @@
+{
+  "name": "tasksclient",
+  "description": "Web app as client for the webserver",
+  "main": "gulp",
+  "authors": [
+    "Daniel Morinigo"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-material": "^1.0.7",
+    "angular-local-storage": "^0.2.7",
+    "angular-route": "^1.5.5"
+  }
+}

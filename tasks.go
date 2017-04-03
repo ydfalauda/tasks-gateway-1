@@ -3,6 +3,8 @@ package main
 import (
 	"time"
 
+	"fmt"
+
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -25,14 +27,12 @@ func (db *DB) UpdateTask(task *Task) (*Task, error) {
 
 	collection := db.GetTaskCollection()
 
-	err := collection.UpdateId(task.ID, task)
-	// _, err := collection.Upsert(bson.M{
-	// 	"name": task.Name,
-	// }, bson.M{
-	// 	"name": task.Name,
-	// 	"done": task.Done,
-	// })
-
+	err := collection.Update(
+		bson.M{"_id": task.ID},
+		bson.M{
+			"$set": bson.M{"name": task.Name, "done": task.Done},
+		},
+	)
 	return task, err
 }
 
@@ -42,12 +42,16 @@ func (db *DB) ListTasks(user *User) ([]Task, error) {
 	err := collection.Find(bson.M{
 		"userid": user.ID,
 	}).Sort("-createdon").All(&tasks)
+
+	if len(tasks) > 0 {
+		fmt.Println(tasks[0].ID)
+	}
 	return tasks, err
 }
 
 type Task struct {
-	ID        bson.ObjectId `json:"_id",bson:"_id"`
-	UserID    bson.ObjectId `json:"userid",bson:"userid"`
+	ID        bson.ObjectId `bson:"_id" json:"_id"`
+	UserID    bson.ObjectId `bson:"userid" json:"userid"`
 	Name      string        `json:"name"`
 	CreatedOn time.Time     `json:"createdon"`
 	Done      bool          `json:"done"`

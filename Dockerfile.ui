@@ -1,0 +1,10 @@
+FROM index.alauda.cn/library/node:5
+
+COPY client-dev /app
+COPY ui-start.sh /app/ui-start.sh
+
+RUN chmod +x /app/ui-start.sh
+
+WORKDIR /app
+
+CMD ["/app/ui-start.sh"]

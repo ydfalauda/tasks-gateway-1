@@ -1,0 +1,25 @@
+version: "2"
+
+services:
+   ui:
+      image: ui
+      links:
+       - gateway
+      volumes:
+       - ./client-dev:/app
+      ports:
+       - "3001:8000"
+   gateway:
+      image: gateway
+      environment:
+        MONGO_PORT_27017_TCP: mongo
+      ports:
+       - "3000:80"
+      links:
+       - mongo
+      command: 
+       - '/go/src/gateway/compile.sh'
+      volumes:
+       - .:/go/src/gateway
+   mongo:
+      image: index.alauda.cn/library/mongo

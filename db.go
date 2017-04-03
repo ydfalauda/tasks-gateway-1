@@ -3,6 +3,8 @@ package main
 import (
 	"errors"
 
+	"sync"
+
 	"github.com/twinj/uuid"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
@@ -10,6 +12,8 @@ import (
 
 type DB struct {
 	Session         *mgo.Session
+	Database        *mgo.Database
+	syncGet         sync.Once
 	DBName          string
 	Collection      string
 	TokenCollection string
@@ -30,19 +34,23 @@ func NewDB(address string, dbname string, collection string, token string, task 
 	}, nil
 }
 
+func (db *DB) getDB() *mgo.Database {
+	db.syncGet.Do(func() {
+		db.Database = db.Session.DB(db.DBName)
+	})
+	return db.Database
+}
+
 func (db *DB) GetCollection() *mgo.Collection {
-	database := db.Session.DB(db.DBName)
-	return database.C(db.Collection)
+	return db.getDB().C(db.Collection)
 }
 
 func (db *DB) GetTokenCollection() *mgo.Collection {
-	database := db.Session.DB(db.DBName)
-	return database.C(db.TokenCollection)
+	return db.getDB().C(db.TokenCollection)
 }
 
 func (db *DB) GetTaskCollection() *mgo.Collection {
-	database := db.Session.DB(db.DBName)
-	return database.C(db.TaskCollection)
+	return db.getDB().C(db.TaskCollection)
 }
 
 func (db *DB) Signup(name string, username string, password string) (*User, error) {

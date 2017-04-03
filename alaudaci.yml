@@ -1,13 +1,12 @@
 version: "0.1.0"
 pre_ci_boot:
     image: index.alauda.cn/library/golang
-    tag: "1.7"
+    tag: "1.8"
 ci:
-    - env
     - mkdir -p $GOPATH/src/gateway
-    - cp -r ./* $GOPATH/src/gateway
+    - cp -r . $GOPATH/src/gateway
     - cd $GOPATH/src/gateway
     - go install
-    - cp $GOPATH/bin/gateway $ALAUDACI_DEST_DIR/
-    - cp Dockerfile $ALAUDACI_DEST_DIR/
-    - cp -r client $ALAUDACI_DEST_DIR/
+    - cp $GOPATH/bin/gateway $ALAUDACI_DEST_DIR/gateway
+    - cp Dockerfile.ci $ALAUDACI_DEST_DIR/Dockerfile
+    - cp -r client $ALAUDACI_DEST_DIR/client
