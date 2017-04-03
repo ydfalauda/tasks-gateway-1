@@ -50,8 +50,9 @@ func main() {
 	app.Post("/tasks/", NeedsToken, CreateTaskMethod)
 	app.Put("/tasks", NeedsToken, UpdateTaskMethod)
 	app.Put("/tasks/", NeedsToken, UpdateTaskMethod)
-
-	dbInstance = GetDB(GetMongoAddress())
+	mongoAddr := GetMongoAddress()
+	fmt.Println("mongo", mongoAddr)
+	dbInstance = GetDB(mongoAddr)
 
 	app.Listen("0.0.0.0:80")
 }
@@ -66,18 +67,19 @@ func GetMongoAddress() string {
 }
 
 func GetDB(address string) *DB {
-	count := 0
-	max := 6
-	for count < max {
+	timeout := time.Now().Add(time.Minute * 5)
+
+	for time.Now().Before(timeout) {
 		db, err := NewDB(address, EnvDBName, "users", "token", "tasks")
-		count++
 		if err != nil {
 			fmt.Println("Error connecting to mongo: ", err)
 			time.Sleep(time.Second)
 			continue
 		}
+		fmt.Println("Connection to mongo succeeded")
 		return db
 	}
+	fmt.Println("Connection to mongo timed out")
 	return nil
 }
 
