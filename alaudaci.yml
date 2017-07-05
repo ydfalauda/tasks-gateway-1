@@ -6,6 +6,7 @@ ci:
     - mkdir -p $GOPATH/src/gateway
     - cp -r . $GOPATH/src/gateway
     - cd $GOPATH/src/gateway
-    - go build -ldflags "-w -s" -v -o $(ALAUDACI_DEST_DIR)/gateway gateway
+    - go build -ldflags "-w -s" -v -o $ALAUDACI_DEST_DIR/gateway gateway
     - cp Dockerfile.ci $ALAUDACI_DEST_DIR/Dockerfile
     - cp -r client $ALAUDACI_DEST_DIR/client
+    - ls -la $ALAUDACI_DEST_DIR
