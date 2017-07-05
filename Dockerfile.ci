@@ -1,4 +1,4 @@
-FROM index.alauda.cn/library/debian:jessie
+FROM index.alauda.cn/library/alpine:3.4
 
 ADD gateway /gateway
 
@@ -7,7 +7,5 @@ ADD client /client
 WORKDIR /
 
 RUN chmod +x /gateway
-
-RUN ls -la / 
 
 CMD ["/gateway"]
