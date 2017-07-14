@@ -1,0 +1,13 @@
+version: "2"
+
+services:
+   gateway:
+      image: index-int.alauda.cn/claasv1/tasks-gateway:latest
+      environment:
+        MONGO_PORT_27017_TCP: mongo
+      ports:
+       - "3000:80"
+      links:
+       - mongo
+   mongo:
+      image: index.alauda.cn/library/mongo

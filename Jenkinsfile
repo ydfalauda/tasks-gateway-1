@@ -1,27 +1,42 @@
-node {
+pipeline {
     def app
+    def token
+    agent any
+    /* lets create a more complex pipeline */
 
-    stage('Clone repository') {
-        /* Let's make sure we have the repository cloned to our workspace */
-
-        checkout scm
-    }
-
-    stage('Build image') {
-        /* This builds the actual image; synonymous to
-         * docker build on the command line */
-
-        app = docker.build("claasv1/tasks-gateway")
-    }
-
-    stage('Push image') {
-        /* Finally, we'll push the image with two tags:
-         * First, the incremental build number from Jenkins
-         * Second, the 'latest' tag.
-         * Pushing multiple tags is cheap, as all the layers are reused. */
-        docker.withRegistry('http://index-int.alauda.cn', 'index-int') {
-            app.push("${env.BUILD_NUMBER}")
-            app.push("latest")
+    stages {
+        /* first build image */    
+        stage('Build') {
+            steps {
+                checkout scm
+                app = docker.build("claasv1/tasks-gateway")
+                docker.withRegistry('http://index-int.alauda.cn', 'index-int') {
+                    app.push("${env.BUILD_NUMBER}")
+                    app.push("latest")
+                }
+            }
         }
+
+        stage('Create Temporary App') {
+            steps {
+                sh 'docker-compose -f docker-compose.1.yml -p jenkins up -d'
+                echo 'will wait a little bit'
+                sleep 10
+            }
+        }
+
+        stage('Start testing') {
+            try {
+                steps {
+                    sh 'docker pull index.alauda.cn/alaudaorg/tasks-integration:latest'
+                    sh 'docker run -t --rm --network jenkins_default --link jenkins_gateway_1:gateway index.alauda.cn/alaudaorg/tasks-integration:latest'
+                }
+            } finally {
+                sh 'docker-compose -f docker-compose.1.yml -p jenkins down'
+
+            }
+        }
+
+
     }
 }
