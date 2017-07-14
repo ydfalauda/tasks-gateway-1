@@ -6,7 +6,7 @@ services:
       environment:
         MONGO_PORT_27017_TCP: mongo
       ports:
-       - "3000:80"
+       - "7333:80"
       links:
        - mongo
    mongo:
