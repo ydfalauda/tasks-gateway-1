@@ -1,10 +1,10 @@
 pipeline {
-    def app
-    def token
+    
     agent any
     /* lets create a more complex pipeline */
 
     stages {
+        def app
         /* first build image */    
         stage('Build') {
             steps {
