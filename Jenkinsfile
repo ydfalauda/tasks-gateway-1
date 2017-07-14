@@ -33,11 +33,13 @@ pipeline {
 
         stage('Start testing') {
             steps {
-                try {
-                    sh 'docker pull index.alauda.cn/alaudaorg/tasks-integration:latest'
-                    sh 'docker run -t --rm --network jenkins_default --link jenkins_gateway_1:gateway index.alauda.cn/alaudaorg/tasks-integration:latest'
-                } finally {
-                    sh 'docker-compose -f docker-compose.1.yml -p jenkins down'
+                script {
+                    try {
+                        sh 'docker pull index.alauda.cn/alaudaorg/tasks-integration:latest'
+                        sh 'docker run -t --rm --network jenkins_default --link jenkins_gateway_1:gateway index.alauda.cn/alaudaorg/tasks-integration:latest'
+                    } finally {
+                        sh 'docker-compose -f docker-compose.1.yml -p jenkins down'
+                    }
                 }
            }    
         }
