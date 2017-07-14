@@ -4,17 +4,22 @@ pipeline {
     /* lets create a more complex pipeline */
 
     stages {
-        def app
+        
         /* first build image */    
         stage('Build') {
-            steps {
-                checkout scm
-                app = docker.build("claasv1/tasks-gateway")
-                docker.withRegistry('http://index-int.alauda.cn', 'index-int') {
-                    app.push("${env.BUILD_NUMBER}")
-                    app.push("latest")
+            script {
+                steps {
+                    def app
+                    checkout scm
+                    app = docker.build("claasv1/tasks-gateway")
+                    docker.withRegistry('http://index-int.alauda.cn', 'index-int') {
+                        app.push("${env.BUILD_NUMBER}")
+                        app.push("latest")
+                    }
                 }
+
             }
+            
         }
 
         stage('Create Temporary App') {
