@@ -11,7 +11,7 @@ node {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
 
-        app = docker.build("tasks-gateway")
+        app = docker.build("claasv1/tasks-gateway")
     }
 
     stage('Push image') {
