@@ -1,3 +1,5 @@
+def app
+
 pipeline {
     
     agent any
@@ -7,9 +9,8 @@ pipeline {
         
         /* first build image */    
         stage('Build') {
-            script {
-                steps {
-                    def app
+            steps {
+                script {
                     checkout scm
                     app = docker.build("claasv1/tasks-gateway")
                     docker.withRegistry('http://index-int.alauda.cn', 'index-int') {
