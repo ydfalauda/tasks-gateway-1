@@ -11,3 +11,7 @@ services:
        - mongo
    mongo:
       image: index.alauda.cn/library/mongo
+networks:
+  default:
+    external:
+      name: default
